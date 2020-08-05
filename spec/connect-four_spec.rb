@@ -1,42 +1,62 @@
 #spec/connect-four_spec.rb
 
 require './lib/connect-four'
+require './lib/board2D'
+
+describe Board do
+  board = Board.new(6,7)
+
+  describe "#is_full?" do
+    it "Returns false if the board is not full" do
+      expect(board.is_full?).to be false
+    end
+  end
+
+  describe "#valid_move?" do
+    it "Returns true if the move is valid" do
+    #  board = Board.new(6,7)
+      expect(board.valid_move?(1,1)).to be true
+    end
+
+    it "Returns false if the move is invalid" do
+      #board = Board.new(6,7)
+      expect(board.valid_move?(1,7)).to be false
+    end
+  end
+
+  describe "#place_piece" do
+    it "Places given piece at desired row, col" do
+      board.place_piece(1,1, "X")
+      expect(board.piece_at(1,1)).to eq "X"
+    end
+  end
+end
 
 describe ConnectFour do
-  describe "#space_available?" do
-    it "Returns true if space is open" do
-      connect_four = ConnectFour.new
-      expect(connect_four.space_available?(1)).to be true
-    end
-  end
+  connect_four = ConnectFour.new
 
   describe "#drop_piece" do
-    it "Places piece at the bottom of cage for an empty column" do
-      connect_four = ConnectFour.new
-      expect(connect_four.space_available?(41)).to be true
-      connect_four.drop_piece('X', 6)
-      expect(connect_four.space_available?(41)).to be false
+    it "Drops piece into bottom of cage for an empty column" do
+      connect_four.drop_piece(5, "X")
+      expect(connect_four.game_board.piece_at(5,5)).to eq "X"
     end
-
-    it "Places piece on top of an existing piece" do
-      connect_four = ConnectFour.new
-      connect_four.drop_piece('X', 3)
-      expect(connect_four.space_available?(38)).to be false
-      connect_four.drop_piece('X', 3)
-      expect(connect_four.space_available?(31)).to be false
-      expect(connect_four.space_available?(24)).to be true
+    it "Drops piece into a column with another piece" do
+      3.times { connect_four.drop_piece(3, "X") }
+      expect(connect_four.game_board.piece_at(3,3)).to eq "X"
     end
   end
 
-  describe "row_win?" do
-    it "Returns true if player has 4 consecutive pieces" do
-      connect_four = ConnectFour.new
-      connect_four.drop_piece('x', 36)
-      connect_four.drop_piece('x', 37)
-      connect_four.drop_piece('x', 38)
-      expect(connect_four.row_win?).to be false
-      connect_four.drop_piece('x', 39)
-      expect(connect_four.row_win?).to be true
+  describe "#vertical_win?" do
+    it "Returns true when 4 of the same piece are in a column" do
+      4.times { connect_four.drop_piece(3, "X") }
+      expect(connect_four.vertical_win?(2,3)).to be true
+    end
+    it "Returns false when 4 are non-contiguous in a column" do
+      3.times { connect_four.drop_piece(2, "X") }
+      connect_four.game_board.place_piece(1,2, "X")
+      expect(connect_four.vertical_win?(1,2)).to be false
     end
   end
+
+
 end

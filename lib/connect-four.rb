@@ -2,34 +2,29 @@
 
 class ConnectFour
 
-  require_relative 'board'
+  require_relative 'board2D'
+  attr_accessor :game_board
 
   def initialize
     @MAX_ROW = 6
     @MAX_COL = 7
     @game_board = Board.new(@MAX_ROW, @MAX_COL)
-
   end
 
-
-
-  # Checks if the space the piece would fall into is open
-  def space_available?(desired_move)
-    @game_board.valid_move?(desired_move)
-  end
 
  # Drops player's piece into desired column
-  def drop_piece(piece, column)
-    bottom_row = @MAX_COL * @MAX_ROW
-    desired_move = bottom_row - (@MAX_COL - column)
-      while desired_move > 0
-        if space_available?(desired_move)
-          @game_board.place_piece(desired_move, piece)
-          break
-        else
-          desired_move = (desired_move - @MAX_COL)
-        end
+  def drop_piece(col, piece)
+    row = @MAX_ROW-1
+
+    until @game_board.valid_move?(row, col)
+      if row < 0
+        return nil
+      else
+        row -= 1
       end
+    end
+     @game_board.place_piece(row, col, piece)
+
   end
 
   # Checks if the player has connected four on the diagonal
@@ -37,46 +32,36 @@ class ConnectFour
   end
 
   # Checks if the player has connected four vertically
-  def vertical_win?
+  def vertical_win?(row, col)
+    piece = @game_board.piece_at(row, col)
+    counter = 1
+    row += 1
+    while row < @MAX_ROW
+      if piece == @game_board.piece_at(row, col)
+        counter += 1
+        row += 1
+      else
+        break
+      end
+    end
+    return counter == 4
   end
 
   # Checks if the player has connected four horizontally
-  def row_win?
-
+  def horizontal_win?
     columns = @game_board.get_columns
-
   end
 
-  # Prints the game board
-  def print
-    puts @game_board
-  end
+
 
 end
 
 game = ConnectFour.new
-game.print
+puts game.game_board
 puts
-game.drop_piece('X', 6)
-game.print
+
+4.times { game.drop_piece(3, "X") }
+puts game.game_board
 puts
-puts game.space_available?(40)
-game.drop_piece('X', 6)
-game.print
-puts
-game.drop_piece('X', 6)
-game.print
-puts
-game.drop_piece('X', 6)
-game.print
-puts
-game.drop_piece('X', 6)
-game.print
-puts
-game.drop_piece('X', 6)
-game.print
-puts
-game.drop_piece('X', 6)
-game.print
-puts
-print game.row_win?
+result  = game.vertical_win?(2,3)
+puts result
