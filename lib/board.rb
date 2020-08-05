@@ -58,4 +58,8 @@ class Board
     return @board[location]
   end
 
+  def get_columns
+    @board
+  end
+
 end

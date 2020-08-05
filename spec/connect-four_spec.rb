@@ -26,6 +26,17 @@ describe ConnectFour do
       expect(connect_four.space_available?(31)).to be false
       expect(connect_four.space_available?(24)).to be true
     end
+  end
 
+  describe "row_win?" do
+    it "Returns true if player has 4 consecutive pieces" do
+      connect_four = ConnectFour.new
+      connect_four.drop_piece('x', 36)
+      connect_four.drop_piece('x', 37)
+      connect_four.drop_piece('x', 38)
+      expect(connect_four.row_win?).to be false
+      connect_four.drop_piece('x', 39)
+      expect(connect_four.row_win?).to be true
+    end
   end
 end

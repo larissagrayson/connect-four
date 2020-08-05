@@ -12,7 +12,7 @@ class ConnectFour
   end
 
 
-  
+
   # Checks if the space the piece would fall into is open
   def space_available?(desired_move)
     @game_board.valid_move?(desired_move)
@@ -41,7 +41,10 @@ class ConnectFour
   end
 
   # Checks if the player has connected four horizontally
-  def horizontal_win?
+  def row_win?
+
+    columns = @game_board.get_columns
+
   end
 
   # Prints the game board
@@ -76,3 +79,4 @@ puts
 game.drop_piece('X', 6)
 game.print
 puts
+print game.row_win?
