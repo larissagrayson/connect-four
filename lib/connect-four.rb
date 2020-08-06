@@ -91,9 +91,10 @@ class ConnectFour
     end
 
     # Left and Down diagonal
+
     next_col = col-1
     next_row = row+1
-    while next_col >=0 && next_row < @MAX_ROW && counter < 4
+    while next_col >= 0 && next_row < @MAX_ROW && counter < 4
       if piece == @game_board.piece_at(next_row, next_col)
         counter+=1
         next_row+=1
@@ -150,10 +151,10 @@ puts
 #puts game.row_win?(5,4)
 
 puts
-game.drop_piece(4, "X")
-game.drop_piece(5, "X")
 game.drop_piece(3, "X")
-game.drop_piece(1, "X")
+2.times { game.drop_piece(2, "X") }
+3.times { game.drop_piece(1, "X") }
+4.times { game.drop_piece(0, "X") }
 puts game.game_board
 puts
-puts game.row_win?(5,1)
+puts game.diagonal_win?(2,0)

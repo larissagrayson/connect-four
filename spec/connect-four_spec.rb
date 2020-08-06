@@ -82,4 +82,45 @@ describe ConnectFour do
     end
   end
 
+  describe "#diagonal_win" do
+    it "Returns true when 4 of the same piece are in a left-down diagonal" do
+      connect_four = ConnectFour.new
+      connect_four.drop_piece(1, "X")
+      2.times { connect_four.drop_piece(2, "X") }
+      3.times { connect_four.drop_piece(3, "X") }
+      4.times { connect_four.drop_piece(4, "X") }
+      expect(connect_four.diagonal_win?(2,4)).to be true
+    end
+
+    it "Returns true when 4 of the same piece are in a right-up diagonal" do
+      connect_four = ConnectFour.new
+      connect_four.drop_piece(1, "X")
+      2.times { connect_four.drop_piece(2, "X") }
+      3.times { connect_four.drop_piece(3, "X") }
+      4.times { connect_four.drop_piece(4, "X") }
+      expect(connect_four.diagonal_win?(5,1)).to be true
+    end
+
+    it "Returns true when 4 of the same piece are in a left-up diagonal" do
+      connect_four = ConnectFour.new
+      connect_four.drop_piece(3, "X")
+      2.times { connect_four.drop_piece(2, "X") }
+      3.times { connect_four.drop_piece(1, "X") }
+      4.times { connect_four.drop_piece(0, "X") }
+      expect(connect_four.diagonal_win?(5,3)).to be true
+    end
+
+    it "Returns true when 4 of the same piece are in a right-down diagonal" do
+      connect_four = ConnectFour.new
+      connect_four.drop_piece(3, "X")
+      2.times { connect_four.drop_piece(2, "X") }
+      3.times { connect_four.drop_piece(1, "X") }
+      4.times { connect_four.drop_piece(0, "X") }
+      expect(connect_four.diagonal_win?(2,0)).to be true
+    end
+
+
+
+  end
+
 end
