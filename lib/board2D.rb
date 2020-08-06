@@ -3,19 +3,24 @@
 class Board
   attr_accessor :board
 
-  def initialize(row, col)
+  def initialize(row, col, board_title)
     @MAX_ROW = row
     @MAX_COL = col
     @board = Array.new(@MAX_ROW) {Array.new(@MAX_COL, " ")}
+    @board_title = board_title
   end
 
   # Prints the board as a string
   def to_s
-    str = String.new
+    str = String.new(@board_title)
     @board.each do |row|
       str += "|"
       row.each do |space|
+        if space == " "
+          str+= "- "
+      else
         str += space
+      end
         str += "|"
       end
     str += "\n"
@@ -69,16 +74,3 @@ class Board
 
 
 end
-
-b = Board.new(6,7)
-#puts b
-#print b.is_full?
-#puts b.valid_move?(-1,0)
-#b.place_piece(1,1, "X")
-#puts b
-#piece = b.piece_at(1,1)
-#puts piece
-b.place_piece(0,1, "X")
-puts b
-cols = b.get_columns
-print cols[1]
