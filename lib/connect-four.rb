@@ -55,7 +55,7 @@ class ConnectFour
 
   def game_start_message
     print "CONNECT FOUR \n"
-    puts "Player 1 -- #{@player1_piece}, Player 2 -- "
+    puts "Player 1 -- #{@player1_piece}, Player 2 -- #{@player2_piece}"
     puts "Please select the column that you want to drop your piece into..."
     puts @game_board
   end

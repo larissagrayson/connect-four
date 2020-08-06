@@ -3,7 +3,7 @@
 class Board
   attr_accessor :board
 
-  def initialize(row, col, board_title)
+  def initialize(row, col, board_title="")
     @MAX_ROW = row
     @MAX_COL = col
     @board = Array.new(@MAX_ROW) {Array.new(@MAX_COL, " ")}
