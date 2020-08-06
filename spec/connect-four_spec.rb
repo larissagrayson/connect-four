@@ -33,30 +33,53 @@ describe Board do
 end
 
 describe ConnectFour do
-  connect_four = ConnectFour.new
 
   describe "#drop_piece" do
     it "Drops piece into bottom of cage for an empty column" do
+      connect_four = ConnectFour.new
       connect_four.drop_piece(5, "X")
       expect(connect_four.game_board.piece_at(5,5)).to eq "X"
     end
     it "Drops piece into a column with another piece" do
+      connect_four = ConnectFour.new
       3.times { connect_four.drop_piece(3, "X") }
       expect(connect_four.game_board.piece_at(3,3)).to eq "X"
     end
   end
 
-  describe "#vertical_win?" do
+  describe "#column_win" do
     it "Returns true when 4 of the same piece are in a column" do
+      connect_four = ConnectFour.new
       4.times { connect_four.drop_piece(3, "X") }
-      expect(connect_four.vertical_win?(2,3)).to be true
+      expect(connect_four.column_win?(2,3)).to be true
     end
     it "Returns false when 4 are non-contiguous in a column" do
+      connect_four = ConnectFour.new
       3.times { connect_four.drop_piece(2, "X") }
       connect_four.game_board.place_piece(1,2, "X")
-      expect(connect_four.vertical_win?(1,2)).to be false
+      expect(connect_four.column_win?(1,2)).to be false
     end
   end
 
+  describe "#row_win" do
+    it "Returns true when 4 of the same piece are in a row" do
+      connect_four = ConnectFour.new
+      connect_four.drop_piece(1, "X")
+      connect_four.drop_piece(2, "X")
+      connect_four.drop_piece(3, "X")
+      connect_four.drop_piece(5, "X")
+      connect_four.drop_piece(6, "X")
+      connect_four.drop_piece(4, "X")
+      expect(connect_four.row_win?(5,4)).to be true
+    end
+    it "Returns false when 4 are non-contiguous in a row" do
+      connect_four = ConnectFour.new
+      connect_four.drop_piece(4, "X")
+      connect_four.drop_piece(5, "X")
+      connect_four.drop_piece(3, "X")
+      connect_four.drop_piece(1, "X")
+      expect(connect_four.row_win?(5,1)).to be false
+    end
+  end
 
 end

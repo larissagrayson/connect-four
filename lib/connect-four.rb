@@ -27,12 +27,9 @@ class ConnectFour
 
   end
 
-  # Checks if the player has connected four on the diagonal
-  def diagonal_win?
-  end
 
-  # Checks if the player has connected four vertically
-  def vertical_win?(row, col)
+  # Checks if the player has connected four in a column
+  def column_win?(row, col)
     piece = @game_board.piece_at(row, col)
     counter = 1
     row += 1
@@ -47,21 +44,58 @@ class ConnectFour
     return counter == 4
   end
 
-  # Checks if the player has connected four horizontally
-  def horizontal_win?
-    columns = @game_board.get_columns
+  # Checks if the player has connected four in a row
+  def row_win?(row, col)
+    piece = @game_board.piece_at(row, col)
+    counter = 1
+    left_side_col = col-1
+    right_side_col = col+1
+    while left_side_col >= 0 && counter <= 4
+      if piece == @game_board.piece_at(row, left_side_col)
+        counter+=1
+        left_side_col-=1
+      else
+        break
+      end
+    end
+      while right_side_col < @MAX_COL && counter !=4 && counter <= 4
+        if piece == @game_board.piece_at(row, right_side_col)
+          counter+=1
+          right_side_col+=1
+        else
+          break
+        end
+      end
+      return counter == 4
+  end
+
+  # Checks if the player has connected four on the diagonal
+  def diagonal_win?
   end
 
 
 
-end
+end  # End of class
 
 game = ConnectFour.new
 puts game.game_board
 puts
 
-4.times { game.drop_piece(3, "X") }
+#game.drop_piece(1, "X")
+#game.drop_piece(2, "X")
+#game.drop_piece(3, "X")
+#game.drop_piece(5, "X")
+#game.drop_piece(6, "X")
+#game.drop_piece(4, "X")
+#puts game.game_board
+#puts
+#puts game.row_win?(5,4)
+
+puts
+game.drop_piece(4, "X")
+game.drop_piece(5, "X")
+game.drop_piece(3, "X")
+game.drop_piece(1, "X")
 puts game.game_board
 puts
-result  = game.vertical_win?(2,3)
-puts result
+puts game.row_win?(5,1)
