@@ -24,9 +24,8 @@ class ConnectFour
       end
     end
      @game_board.place_piece(row, col, piece)
-
+     return row, col  #returns piece's location as an array [row, col]
   end
-
 
   # Checks if the player has connected four in a column
   def column_win?(row, col)
@@ -48,29 +47,88 @@ class ConnectFour
   def row_win?(row, col)
     piece = @game_board.piece_at(row, col)
     counter = 1
-    left_side_col = col-1
-    right_side_col = col+1
-    while left_side_col >= 0 && counter <= 4
-      if piece == @game_board.piece_at(row, left_side_col)
+
+    # Check left
+    next_col = col-1
+    while next_col >= 0 && counter < 4
+      if piece == @game_board.piece_at(row, next_col)
         counter+=1
-        left_side_col-=1
+        next_col-=1
       else
         break
       end
     end
-      while right_side_col < @MAX_COL && counter !=4 && counter <= 4
-        if piece == @game_board.piece_at(row, right_side_col)
-          counter+=1
-          right_side_col+=1
-        else
-          break
-        end
+
+    # Check right
+    next_col = col+1
+    while next_col < @MAX_COL && counter < 4
+      if piece == @game_board.piece_at(row, next_col)
+        counter+=1
+        next_col+=1
+      else
+        break
       end
-      return counter == 4
+    end
+    return counter == 4
   end
 
   # Checks if the player has connected four on the diagonal
-  def diagonal_win?
+  def diagonal_win?(row, col)
+    piece = @game_board.piece_at(row, col)
+    counter = 1
+
+    # Left and Up diagonal
+    next_col = col-1
+    next_row = row-1
+    while next_col >=0 && next_row >=0 && counter < 4
+      if piece == @game_board.piece_at(next_row, next_col)
+        counter+=1
+        next_row-=1
+        next_col-=1
+      else
+        break
+      end
+    end
+
+    # Left and Down diagonal
+    next_col = col-1
+    next_row = row+1
+    while next_col >=0 && next_row < @MAX_ROW && counter < 4
+      if piece == @game_board.piece_at(next_row, next_col)
+        counter+=1
+        next_row+=1
+        next_col-=1
+      else
+        break
+      end
+    end
+
+    # Right and Up diagonal
+    next_col = col+1
+    next_row = row-1
+    while next_col < @MAX_COL && next_row >= 0 && counter < 4
+      if piece == @game_board.piece_at(next_row, next_col)
+        counter+=1
+        next_row-=1
+        next_col+=1
+      else
+        break
+      end
+    end
+
+    # Right and Down diagonal
+    next_col = col+1
+    next_row = row+1
+    while next_col < @MAX_COL && next_row < @MAX_ROW && counter < 4
+      if piece == @game_board.piece_at(next_row, next_col)
+        counter+=1
+        next_row+=1
+        next_col+=1
+      else
+        break
+      end
+    end
+    return counter == 4
   end
 
 

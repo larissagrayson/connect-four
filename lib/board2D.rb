@@ -61,9 +61,12 @@ class Board
     return @board[row][col]
   end
 
+
   def get_columns
     @board.transpose
   end
+
+
 
 end
 
