@@ -7,6 +7,8 @@
 
 **OBJECTIVE:** The purpose of this project was to build the game Connect Four using Test Driven Development (TDD).  The test cases are written using RSpec and the game is written in Ruby.
 
+A live demo of this game can be found [here](https://repl.it/@lgrayson/connect-four#).
+
 **SKILLS DEMONSTRATED:**
 * TDD using RSpec
 * Object Oriented Programming
